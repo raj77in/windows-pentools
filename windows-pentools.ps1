@@ -2,8 +2,34 @@
 Author: Hacker101 (@raj77in) aka Amit Agarwal
 License: BSD 3-Clause
 Required Dependencies: None
+Add this to make it mandatory
+#Requires -RunAsAdministrator
 #>
 
+# Check if the script is running as admin
+$IsAdmin = $false
+
+try {
+    # Attempt to get the current user's Windows identity
+    $user = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+    $principal = New-Object System.Security.Principal.WindowsPrincipal($user)
+
+    # Check if the user is an administrator
+    if ($principal.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)) {
+        $IsAdmin = $true
+    }
+} catch {
+    Write-Host "Error checking admin status: $_"
+}
+
+# Set a variable if not running as admin
+if (-not $IsAdmin) {
+    $AdminWarning = "Script is not running with administrative privileges. Symbolic links will not be created."
+    Write-Host $AdminWarning
+} else {
+    # Place your code to create symbolic links here
+    Write-Host "Running with administrative privileges."
+}
 
 $hugefiles = @{
 	"GhostPack"         = "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/archive/refs/heads/master.zip";
@@ -69,6 +95,7 @@ $zipurls = @{
 	"ADRecon"           = "https://github.com/adrecon/ADRecon/archive/refs/heads/master.zip";
 	"WDACTools"         = "https://github.com/mattifestation/WDACTools/archive/refs/heads/master.zip";
 	"pentools"          = "https://github.com/raj77in/pentools/archive/refs/heads/master.zip";	
+	"wmi-explorer"      = "https://github.com/raj77in/wmi-explorer/archive/refs/heads/master.zip";
 }
 
 $others = @{
@@ -102,6 +129,7 @@ $others = @{
 	"adPEAS.ps1"                          = "https://raw.githubusercontent.com/61106960/adPEAS/main/adPEAS-Light.ps1";
 	"Active Directory Attack.md"          = "https://raw.githubusercontent.com/swisskyrepo/PayloadsAllTheThings/master/Methodology%20and%20Resources/Active%20Directory%20Attack.md";
 	"PowerView-3.0-tricks.ps1"            = "https://gist.githubusercontent.com/HarmJ0y/184f9822b195c52dd50c379ed3117993/raw/e5e30c942adb2347917563ef0dafa7054882535a/PowerView-3.0-tricks.ps1";
+	"AD-CheatSheet.md" 					  = "https://raw.githubusercontent.com/S1ckB0y1337/Active-Directory-Exploitation-Cheat-Sheet/refs/heads/master/README.md";
 }
 
 $copyfiles = @(
@@ -563,7 +591,13 @@ Foreach ($i in $copyfiles.GetEnumerator()) {
 		# We can create links here, which will be better but it requires admin privilge but if 
 		# you prefere, you can do this
 		# New-Item -Path Nishang\nishang-master\Utility\Invoke-Encode.ps1 -ItemType SymbolicLink -Value .
-		New-Item -Path $i -ItemType SymbolicLink
+		if ($IsAdmin) {
+			New-Item -Target $i -ItemType SymbolicLink -Path (Get-Item $i).Name
+		}
+		else {
+			Write-Host "Not Creating link for $i as we dont have admin rights."
+		}
+		
 	}
 }
 
@@ -598,3 +632,4 @@ Write-Host "For Colors in winpeas in windows - REG ADD HKCU\Console /v VirtualTe
 Write-Host 'New-ItemProperty -Path HKCU:Console -Name VirtualTerminalLevel -Value "1" -Type DWORD'
 
 Set-Location ..
+

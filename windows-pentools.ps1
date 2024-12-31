@@ -130,6 +130,8 @@ $others = @{
 	"Active Directory Attack.md"          = "https://raw.githubusercontent.com/swisskyrepo/PayloadsAllTheThings/master/Methodology%20and%20Resources/Active%20Directory%20Attack.md";
 	"PowerView-3.0-tricks.ps1"            = "https://gist.githubusercontent.com/HarmJ0y/184f9822b195c52dd50c379ed3117993/raw/e5e30c942adb2347917563ef0dafa7054882535a/PowerView-3.0-tricks.ps1";
 	"AD-CheatSheet.md" 					  = "https://raw.githubusercontent.com/S1ckB0y1337/Active-Directory-Exploitation-Cheat-Sheet/refs/heads/master/README.md";
+	"VMwareCloak.ps1"                     = "https://raw.githubusercontent.com/d4rksystem/VMwareCloak/refs/heads/main/VMwareCloak.ps1";
+	"VBoxCloak.ps1"                       = "https://raw.githubusercontent.com/d4rksystem/VBoxCloak/refs/heads/master/VBoxCloak.ps1";
 }
 
 $copyfiles = @(

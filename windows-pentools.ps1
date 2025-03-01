@@ -96,6 +96,7 @@ $zipurls = @{
 	"WDACTools"         = "https://github.com/mattifestation/WDACTools/archive/refs/heads/master.zip";
 	"pentools"          = "https://github.com/raj77in/pentools/archive/refs/heads/master.zip";	
 	"wmi-explorer"      = "https://github.com/raj77in/wmi-explorer/archive/refs/heads/master.zip";
+	"Invoke-Obfuscation" = "https://github.com/danielbohannon/Invoke-Obfuscation/archive/refs/heads/master.zip";
 }
 
 $others = @{
